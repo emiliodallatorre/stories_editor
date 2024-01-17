@@ -1,0 +1,10 @@
+{
+  "discardEdits": "Discard Edits?",
+  "discardEditsExtended": "If you go back now, you'll lose all the edits you've made.",
+  "discard": "Discard",
+  "successfullySaved": "Successfully Saved",
+  "error": "Error",
+  "nothingToSave": "Nothing to Save",
+  "saveDraft": "Save Draft",
+  "cancel": "Cancel"
+}

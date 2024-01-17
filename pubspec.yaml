@@ -4,11 +4,14 @@ version: 4.0.17
 homepage: https://github.com/camilo1498/stories_editor
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.18.1
 
   # state management
   provider: ^6.0.5
@@ -152,3 +155,5 @@ flutter:
     - family: UnifrakturMaguntia
       fonts:
         - asset: packages/stories_editor/assets/fonts/UnifrakturMaguntia-Regular.ttf
+flutter_intl:
+  enabled: true
