@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_media_picker/gallery_media_picker.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
+import 'package:stories_editor/generated/l10n.dart';
 import 'package:stories_editor/src/domain/models/editable_items.dart';
 import 'package:stories_editor/src/domain/models/painting_model.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/control_provider.dart';
@@ -265,7 +266,7 @@ class _MainViewState extends State<MainView> {
                                 ignoring: true,
                                 child: Align(
                                   alignment: const Alignment(0, -0.1),
-                                  child: Text('Tap to type',
+                                  child: Text(S.of(context).tapToType,
                                       style: TextStyle(
                                           fontFamily: 'Alegreya',
                                           package: 'stories_editor',

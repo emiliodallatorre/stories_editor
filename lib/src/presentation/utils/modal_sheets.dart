@@ -61,14 +61,14 @@ Future<bool> exitDialog({required context, required contentKey}) async {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    S.current.discardEdits,
+                    S.of(context).discardEdits,
                     style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white, letterSpacing: 0.5),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   Text(
-                    S.current.discardEditsExtended,
+                    S.of(context).discardEditsExtended,
                     style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.white54, letterSpacing: 0.1),
                     textAlign: TextAlign.center,
                   ),
@@ -83,7 +83,7 @@ Future<bool> exitDialog({required context, required contentKey}) async {
                       Navigator.of(context).pop(true);
                     },
                     child: Text(
-                      S.current.discard,
+                      S.of(context).discard,
                       style: TextStyle(fontSize: 16, color: Colors.redAccent.shade200, fontWeight: FontWeight.bold, letterSpacing: 0.1),
                       textAlign: TextAlign.center,
                     ),
@@ -104,16 +104,16 @@ Future<bool> exitDialog({required context, required contentKey}) async {
                         /// save image
                         var response = await takePicture(contentKey: contentKey, context: context, saveToGallery: true);
                         if (response) {
-                          _dispose(context: context, message: S.current.successfullySaved);
+                          _dispose(context: context, message: S.of(context).successfullySaved);
                         } else {
-                          _dispose(context: context, message: S.current.error);
+                          _dispose(context: context, message: S.of(context).error);
                         }
                       } else {
-                        _dispose(context: context, message: S.current.nothingToSave);
+                        _dispose(context: context, message: S.of(context).nothingToSave);
                       }
                     },
                     child: Text(
-                      S.current.saveDraft,
+                      S.of(context).saveDraft,
                       style: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                       textAlign: TextAlign.center,
                     ),
@@ -131,7 +131,7 @@ Future<bool> exitDialog({required context, required contentKey}) async {
                       Navigator.of(context).pop(false);
                     },
                     child: Text(
-                      S.current.cancel,
+                      S.of(context).cancel,
                       style: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                       textAlign: TextAlign.center,
                     ),

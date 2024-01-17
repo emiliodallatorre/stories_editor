@@ -28,11 +28,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Annullare le modifiche?"),
         "discardEditsExtended": MessageLookupByLibrary.simpleMessage(
             "Se si esce ora, tutte le modifiche apportate alle feature non salvate andranno perse."),
+        "done": MessageLookupByLibrary.simpleMessage("Fatto"),
         "error": MessageLookupByLibrary.simpleMessage("Errore"),
         "nothingToSave":
             MessageLookupByLibrary.simpleMessage("Nulla da salvare"),
         "saveDraft": MessageLookupByLibrary.simpleMessage("Salva bozza"),
         "successfullySaved":
-            MessageLookupByLibrary.simpleMessage("Salvato con successo")
+            MessageLookupByLibrary.simpleMessage("Salvato con successo"),
+        "tapToType":
+            MessageLookupByLibrary.simpleMessage("Toccare per digitare")
       };
 }

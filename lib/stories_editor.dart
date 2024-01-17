@@ -3,8 +3,10 @@ library stories_editor;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stories_editor/generated/l10n.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/control_provider.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/draggable_widget_notifier.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/gradient_notifier.dart';
@@ -53,10 +55,14 @@ class StoriesEditor extends StatefulWidget {
   /// Default is 9 / 16, like in Instagram.
   final double storyAspectRatio;
 
+  /// Editor locale
+  final Locale locale;
+
   const StoriesEditor({
     Key? key,
     required this.giphyKey,
     required this.onDone,
+    required this.locale,
     this.middleBottomWidget,
     this.colorList,
     this.gradientColors,
@@ -94,35 +100,45 @@ class _StoriesEditorState extends State<StoriesEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<OverscrollIndicatorNotification>(
-      onNotification: (overscroll) {
-        overscroll.disallowIndicator();
-        return false;
-      },
-      child: ScreenUtilInit(
-        designSize: const Size(1080, 1920),
-        builder: (_, __) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => ControlNotifier()),
-            ChangeNotifierProvider(create: (_) => ScrollNotifier()),
-            ChangeNotifierProvider(create: (_) => DraggableWidgetNotifier()),
-            ChangeNotifierProvider(create: (_) => GradientNotifier()),
-            ChangeNotifierProvider(create: (_) => PaintingNotifier()),
-            ChangeNotifierProvider(create: (_) => TextEditingNotifier()),
-          ],
-          child: MainView(
-            giphyKey: widget.giphyKey,
-            onDone: widget.onDone,
-            fontFamilyList: widget.fontFamilyList,
-            isCustomFontList: widget.isCustomFontList,
-            middleBottomWidget: widget.middleBottomWidget,
-            gradientColors: widget.gradientColors,
-            colorList: widget.colorList,
-            onDoneButtonStyle: widget.onDoneButtonStyle,
-            onBackPress: widget.onBackPress,
-            editorBackgroundColor: widget.editorBackgroundColor,
-            galleryThumbnailQuality: widget.galleryThumbnailQuality,
-            storyAspectRatio: widget.storyAspectRatio,
+    return Localizations(
+      // delegates: AppLocalizations.localizationsDelegates,
+      locale: widget.locale,
+      delegates: const <LocalizationsDelegate>[
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        S.delegate,
+      ],
+      child: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (overscroll) {
+          overscroll.disallowIndicator();
+          return false;
+        },
+        child: ScreenUtilInit(
+          designSize: const Size(1080, 1920),
+          builder: (_, __) => MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (_) => ControlNotifier()),
+              ChangeNotifierProvider(create: (_) => ScrollNotifier()),
+              ChangeNotifierProvider(create: (_) => DraggableWidgetNotifier()),
+              ChangeNotifierProvider(create: (_) => GradientNotifier()),
+              ChangeNotifierProvider(create: (_) => PaintingNotifier()),
+              ChangeNotifierProvider(create: (_) => TextEditingNotifier()),
+            ],
+            child: MainView(
+              giphyKey: widget.giphyKey,
+              onDone: widget.onDone,
+              fontFamilyList: widget.fontFamilyList,
+              isCustomFontList: widget.isCustomFontList,
+              middleBottomWidget: widget.middleBottomWidget,
+              gradientColors: widget.gradientColors,
+              colorList: widget.colorList,
+              onDoneButtonStyle: widget.onDoneButtonStyle,
+              onBackPress: widget.onBackPress,
+              editorBackgroundColor: widget.editorBackgroundColor,
+              galleryThumbnailQuality: widget.galleryThumbnailQuality,
+              storyAspectRatio: widget.storyAspectRatio,
+            ),
           ),
         ),
       ),

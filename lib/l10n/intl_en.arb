@@ -6,5 +6,7 @@
   "error": "Error",
   "nothingToSave": "Nothing to Save",
   "saveDraft": "Save Draft",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "done": "Done",
+  "tapToType": "Tap to type"
 }

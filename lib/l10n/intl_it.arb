@@ -6,5 +6,7 @@
   "error": "Errore",
   "nothingToSave": "Nulla da salvare",
   "saveDraft": "Salva bozza",
-  "cancel": "Cancella"
+  "cancel": "Cancella",
+  "done": "Fatto",
+  "tapToType": "Toccare per digitare"
 }

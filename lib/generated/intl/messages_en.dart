@@ -27,11 +27,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "discardEdits": MessageLookupByLibrary.simpleMessage("Discard Edits?"),
         "discardEditsExtended": MessageLookupByLibrary.simpleMessage(
             "If you go back now, you\'ll lose all the edits you\'ve made."),
+        "done": MessageLookupByLibrary.simpleMessage("Done"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
         "nothingToSave":
             MessageLookupByLibrary.simpleMessage("Nothing to Save"),
         "saveDraft": MessageLookupByLibrary.simpleMessage("Save Draft"),
         "successfullySaved":
-            MessageLookupByLibrary.simpleMessage("Successfully Saved")
+            MessageLookupByLibrary.simpleMessage("Successfully Saved"),
+        "tapToType": MessageLookupByLibrary.simpleMessage("Tap to type")
       };
 }
