@@ -1,12 +1,12 @@
 {
-  "discardEdits": "Discard Edits?",
-  "discardEditsExtended": "If you go back now, you'll lose all the edits you've made.",
-  "discard": "Discard",
-  "successfullySaved": "Successfully Saved",
-  "error": "Error",
-  "nothingToSave": "Nothing to Save",
-  "saveDraft": "Save Draft",
-  "cancel": "Cancel",
-  "done": "Done",
-  "tapToType": "Tap to type"
+  "discardEdits": "Annullare le modifiche?",
+  "discardEditsExtended": "Se si esce ora, tutte le modifiche apportate alle feature non salvate andranno perse.",
+  "discard": "Annulla",
+  "successfullySaved": "Salvato con successo",
+  "error": "Errore",
+  "nothingToSave": "Nulla da salvare",
+  "saveDraft": "Salva bozza",
+  "cancel": "Cancella",
+  "done": "Fatto",
+  "tapToType": "Toccare per digitare"
 }

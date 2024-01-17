@@ -61,6 +61,7 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
           builder: (_, controlNotifier, editorNotifier, __) {
             return Scaffold(
               backgroundColor: Colors.transparent,
+              resizeToAvoidBottomInset: false,
               body: GestureDetector(
                 /// onTap => Close view and create/modify item object
                 onTap: () => _onTap(context, controlNotifier, editorNotifier),
@@ -99,7 +100,7 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
                             child: const Align(
                               alignment: Alignment.bottomCenter,
                               child: Padding(
-                                padding: EdgeInsets.only(bottom: 20),
+                                padding: EdgeInsets.only(bottom: 0),
                                 child: FontSelector(),
                               ),
                             ),

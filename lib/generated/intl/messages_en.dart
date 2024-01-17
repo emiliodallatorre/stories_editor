@@ -22,18 +22,20 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "discard": MessageLookupByLibrary.simpleMessage("Discard"),
-        "discardEdits": MessageLookupByLibrary.simpleMessage("Discard Edits?"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancella"),
+        "discard": MessageLookupByLibrary.simpleMessage("Annulla"),
+        "discardEdits":
+            MessageLookupByLibrary.simpleMessage("Annullare le modifiche?"),
         "discardEditsExtended": MessageLookupByLibrary.simpleMessage(
-            "If you go back now, you\'ll lose all the edits you\'ve made."),
-        "done": MessageLookupByLibrary.simpleMessage("Done"),
-        "error": MessageLookupByLibrary.simpleMessage("Error"),
+            "Se si esce ora, tutte le modifiche apportate alle feature non salvate andranno perse."),
+        "done": MessageLookupByLibrary.simpleMessage("Fatto"),
+        "error": MessageLookupByLibrary.simpleMessage("Errore"),
         "nothingToSave":
-            MessageLookupByLibrary.simpleMessage("Nothing to Save"),
-        "saveDraft": MessageLookupByLibrary.simpleMessage("Save Draft"),
+            MessageLookupByLibrary.simpleMessage("Nulla da salvare"),
+        "saveDraft": MessageLookupByLibrary.simpleMessage("Salva bozza"),
         "successfullySaved":
-            MessageLookupByLibrary.simpleMessage("Successfully Saved"),
-        "tapToType": MessageLookupByLibrary.simpleMessage("Tap to type")
+            MessageLookupByLibrary.simpleMessage("Salvato con successo"),
+        "tapToType":
+            MessageLookupByLibrary.simpleMessage("Toccare per digitare")
       };
 }

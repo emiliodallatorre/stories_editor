@@ -1,7 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -19,14 +18,17 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null, 'No instance of S was loaded. Try to initialize the S delegate before accessing S.of(context).');
+    assert(_current != null,
+        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
     return _current!;
   }
 
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -39,7 +41,8 @@ class S {
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null, 'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(instance != null,
+        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
     return instance!;
   }
 
@@ -47,100 +50,100 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Discard Edits?`
+  /// `Annullare le modifiche?`
   String get discardEdits {
     return Intl.message(
-      'Discard Edits?',
+      'Annullare le modifiche?',
       name: 'discardEdits',
       desc: '',
       args: [],
     );
   }
 
-  /// `If you go back now, you'll lose all the edits you've made.`
+  /// `Se si esce ora, tutte le modifiche apportate alle feature non salvate andranno perse.`
   String get discardEditsExtended {
     return Intl.message(
-      'If you go back now, you\'ll lose all the edits you\'ve made.',
+      'Se si esce ora, tutte le modifiche apportate alle feature non salvate andranno perse.',
       name: 'discardEditsExtended',
       desc: '',
       args: [],
     );
   }
 
-  /// `Discard`
+  /// `Annulla`
   String get discard {
     return Intl.message(
-      'Discard',
+      'Annulla',
       name: 'discard',
       desc: '',
       args: [],
     );
   }
 
-  /// `Successfully Saved`
+  /// `Salvato con successo`
   String get successfullySaved {
     return Intl.message(
-      'Successfully Saved',
+      'Salvato con successo',
       name: 'successfullySaved',
       desc: '',
       args: [],
     );
   }
 
-  /// `Error`
+  /// `Errore`
   String get error {
     return Intl.message(
-      'Error',
+      'Errore',
       name: 'error',
       desc: '',
       args: [],
     );
   }
 
-  /// `Nothing to Save`
+  /// `Nulla da salvare`
   String get nothingToSave {
     return Intl.message(
-      'Nothing to Save',
+      'Nulla da salvare',
       name: 'nothingToSave',
       desc: '',
       args: [],
     );
   }
 
-  /// `Save Draft`
+  /// `Salva bozza`
   String get saveDraft {
     return Intl.message(
-      'Save Draft',
+      'Salva bozza',
       name: 'saveDraft',
       desc: '',
       args: [],
     );
   }
 
-  /// `Cancel`
+  /// `Cancella`
   String get cancel {
     return Intl.message(
-      'Cancel',
+      'Cancella',
       name: 'cancel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Done`
+  /// `Fatto`
   String get done {
     return Intl.message(
-      'Done',
+      'Fatto',
       name: 'done',
       desc: '',
       args: [],
     );
   }
 
-  /// `Tap to type`
+  /// `Toccare per digitare`
   String get tapToType {
     return Intl.message(
-      'Tap to type',
+      'Toccare per digitare',
       name: 'tapToType',
       desc: '',
       args: [],
