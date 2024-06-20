@@ -29,10 +29,10 @@ Future createGiphyItem({required BuildContext context, required giphyKey}) async
 
   /// create item of type GIF
   if (_editableItem.giphy != null) {
-    _editableItem.draggableWidget.add(EditableItem()
-      ..type = ItemType.gif
-      ..gif = _editableItem.giphy!
-      ..position = const Offset(0.0, 0.0));
+    _editableItem.draggableWidget.add(EditableItem(
+      type: ItemType.gif,
+      position: const Offset(0.0, 0.0),
+    )..gif = _editableItem.giphy!);
   }
 }
 

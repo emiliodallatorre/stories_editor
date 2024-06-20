@@ -25,4 +25,6 @@ class EditableItem {
 
   /// Gif
   GiphyGif gif = GiphyGif(id: '0');
+
+  EditableItem({required this.type, required this.position});
 }

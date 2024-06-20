@@ -22,7 +22,7 @@ import 'package:stories_editor/src/presentation/draggable_items/delete_item.dart
 import 'package:stories_editor/src/presentation/draggable_items/draggable_widget.dart';
 import 'package:stories_editor/src/presentation/painting_view/painting.dart';
 import 'package:stories_editor/src/presentation/painting_view/widgets/sketcher.dart';
-import 'package:stories_editor/src/presentation/text_editor_view/TextEditor.dart';
+import 'package:stories_editor/src/presentation/text_editor_view/text_editor.dart';
 import 'package:stories_editor/src/presentation/utils/constants/app_enums.dart';
 import 'package:stories_editor/src/presentation/utils/modal_sheets.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
@@ -331,17 +331,20 @@ class _MainViewState extends State<MainView> {
                   gridViewController: scrollProvider.gridController,
                   thumbnailQuality: widget.galleryThumbnailQuality,
                   singlePick: true,
-                  onlyImages: true,
+                  onlyImages: false,
                   appBarColor: widget.editorBackgroundColor ?? Colors.black,
                   gridViewPhysics: itemProvider.draggableWidget.isEmpty ? const NeverScrollableScrollPhysics() : const ScrollPhysics(),
                   pathList: (path) {
-                    controlNotifier.mediaPath = path.first.path!.toString();
+                    controlNotifier.mediaPath = path.single.path!.toString();
+
                     if (controlNotifier.mediaPath.isNotEmpty) {
                       itemProvider.draggableWidget.insert(
                           0,
-                          EditableItem()
-                            ..type = ItemType.image
-                            ..position = const Offset(0.0, 0));
+                        EditableItem(
+                          type: ItemType.image,
+                          position: const Offset(0.0, 0),
+                        ),
+                      );
                     }
                     scrollProvider.pageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
                   },

@@ -154,14 +154,14 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
           sequenceList = splitList[0];
         } else {
           lastSequenceList = sequenceList;
-          editorNotifier.textList.add(sequenceList + ' ' + splitList[i]);
-          sequenceList = lastSequenceList + ' ' + splitList[i];
+          editorNotifier.textList.add('$sequenceList ${splitList[i]}');
+          sequenceList = '$lastSequenceList ${splitList[i]}';
         }
       }
 
       /// create Text Item
-      _editableItemNotifier.draggableWidget.add(EditableItem()
-        ..type = ItemType.text
+      _editableItemNotifier.draggableWidget.add(EditableItem(
+          type: ItemType.text, position: const Offset(0.0, 0.0))
         ..text = editorNotifier.text.trim()
         ..backGroundColor = editorNotifier.backGroundColor
         ..textColor = controlNotifier.colorList![editorNotifier.textColor]
@@ -170,8 +170,7 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
         ..fontAnimationIndex = editorNotifier.fontAnimationIndex
         ..textAlign = editorNotifier.textAlign
         ..textList = editorNotifier.textList
-        ..animationType = editorNotifier.animationList[editorNotifier.fontAnimationIndex]
-        ..position = const Offset(0.0, 0.0));
+        ..animationType = editorNotifier.animationList[editorNotifier.fontAnimationIndex]);
       editorNotifier.setDefaults();
       controlNotifier.isTextEditing = !controlNotifier.isTextEditing;
     } else {
