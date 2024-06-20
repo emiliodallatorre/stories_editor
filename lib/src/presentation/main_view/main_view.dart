@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_media_picker/gallery_media_picker.dart';
+import 'package:mime/mime.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:stories_editor/generated/l10n.dart';
@@ -334,14 +335,28 @@ class _MainViewState extends State<MainView> {
                   onlyImages: false,
                   appBarColor: widget.editorBackgroundColor ?? Colors.black,
                   gridViewPhysics: itemProvider.draggableWidget.isEmpty ? const NeverScrollableScrollPhysics() : const ScrollPhysics(),
-                  pathList: (path) {
-                    controlNotifier.mediaPath = path.single.path!.toString();
+                  pathList: (final List<PickedAssetModel> pickedAssets) {
+                    final PickedAssetModel pickedAsset = pickedAssets.single;
 
+                    final ItemType type;
+                    final String? mimeType = lookupMimeType(pickedAsset.path!);
+                    if (mimeType == null) {
+                      throw Exception('Mime type for path: ${pickedAsset.path} is null');
+                    }
+                    if (mimeType.startsWith("image")) {
+                      type = ItemType.image;
+                    } else if (mimeType.startsWith("video")) {
+                      type = ItemType.video;
+                    } else {
+                      throw Exception('Mime type $mimeType for path: ${pickedAsset.path} is not supported');
+                    }
+
+                    controlNotifier.mediaPath = pickedAsset.path!.toString();
                     if (controlNotifier.mediaPath.isNotEmpty) {
                       itemProvider.draggableWidget.insert(
                           0,
                         EditableItem(
-                          type: ItemType.image,
+                          type: type,
                           position: const Offset(0.0, 0),
                         ),
                       );
