@@ -58,6 +58,7 @@ class BottomTools extends StatelessWidget {
                                   },
                                   child: const CoverThumbnail(
                                     thumbnailQuality: 150,
+                                    requestType: RequestType.common,
                                   ),
                                 ))
 
@@ -137,7 +138,9 @@ class BottomTools extends StatelessWidget {
                               if (bytes != null) {
                                 pngUri = bytes;
                                 onDone(pngUri);
-                              } else {}
+                              } else {
+                                throw Exception('Error saving image');
+                              }
                             });
                           },
                           child: onDoneButtonStyle ??

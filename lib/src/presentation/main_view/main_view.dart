@@ -262,7 +262,10 @@ class _MainViewState extends State<MainView> {
                             ),
 
                             /// middle text
-                            if (itemProvider.draggableWidget.isEmpty && !controlNotifier.isTextEditing && paintingProvider.lines.isEmpty)
+                            if (itemProvider.draggableWidget.isEmpty &&
+                                !controlNotifier.isTextEditing &&
+                                paintingProvider.lines.isEmpty &&
+                                canEdit(itemProvider.draggableWidget))
                               IgnorePointer(
                                 ignoring: true,
                                 child: Align(
@@ -279,11 +282,12 @@ class _MainViewState extends State<MainView> {
                               ),
 
                             /// top tools
-                            Visibility(
-                              visible: !controlNotifier.isTextEditing && !controlNotifier.isPainting,
-                              child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: TopTools(
+                            if (canEdit(itemProvider.draggableWidget))
+                              Visibility(
+                                visible: !controlNotifier.isTextEditing && !controlNotifier.isPainting,
+                                child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: TopTools(
                                     contentKey: contentKey,
                                     context: context,
                                   )),
@@ -332,7 +336,7 @@ class _MainViewState extends State<MainView> {
                   gridViewController: scrollProvider.gridController,
                   thumbnailQuality: widget.galleryThumbnailQuality,
                   singlePick: true,
-                  onlyImages: false,
+                  requestType: RequestType.common,
                   appBarColor: widget.editorBackgroundColor ?? Colors.black,
                   gridViewPhysics: itemProvider.draggableWidget.isEmpty ? const NeverScrollableScrollPhysics() : const ScrollPhysics(),
                   pathList: (final List<PickedAssetModel> pickedAssets) {
@@ -396,6 +400,8 @@ class _MainViewState extends State<MainView> {
       ),
     );
   }
+
+  bool canEdit(final List<EditableItem> items) => !items.any((final EditableItem item) => item.type == ItemType.video);
 
   /// validate pop scope gesture
   Future<bool> _popScope() async {

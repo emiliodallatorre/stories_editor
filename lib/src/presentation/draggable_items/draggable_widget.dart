@@ -11,6 +11,7 @@ import 'package:stories_editor/src/domain/providers/notifiers/control_provider.d
 import 'package:stories_editor/src/domain/providers/notifiers/draggable_widget_notifier.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/gradient_notifier.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/text_editing_notifier.dart';
+import 'package:stories_editor/src/presentation/draggable_items/video_player_wrapper.dart';
 import 'package:stories_editor/src/presentation/utils/constants/app_enums.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
 import 'package:stories_editor/src/presentation/widgets/file_image_bg.dart';
@@ -134,7 +135,11 @@ class DraggableWidget extends StatelessWidget {
         break;
 
       case ItemType.video:
-        overlayWidget = const Center();
+        overlayWidget = VideoPlayerWrapper(
+          mediaPath: controlProvider.mediaPath,
+        );
+
+        break;
     }
 
     /// set widget data position on main screen

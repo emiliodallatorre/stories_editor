@@ -29,7 +29,8 @@ dependencies:
       url: https://github.com/nguyenxdat/image_gallery_saver.git
   #own packages
   gallery_media_picker:
-    git: https://github.com/emiliodallatorre/gallery_media_picker
+    # git: https://github.com/emiliodallatorre/gallery_media_picker
+    path: ../gallery_media_picker
 
 
   modal_gif_picker:
@@ -45,6 +46,13 @@ dependencies:
 
   flutter_screenutil: ^5.8.4
   mime: ^1.0.5
+  video_player: ^2.8.7
+  video_trimmer: ^3.0.1
+
+
+dependency_overrides:
+  intl: ^0.19.0
+
 
 dev_dependencies:
   flutter_test:
