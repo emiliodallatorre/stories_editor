@@ -160,7 +160,7 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
       }
 
       /// create Text Item
-      editableItemNotifier.draggableWidget.add(EditableItem(
+      editableItemNotifier.editableItems.add(EditableItem(
           type: ItemType.text, position: const Offset(0.0, 0.0))
         ..text = editorNotifier.text.trim()
         ..backGroundColor = editorNotifier.backGroundColor

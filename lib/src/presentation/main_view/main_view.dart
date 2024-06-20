@@ -143,7 +143,7 @@ class _MainViewState extends State<MainView> {
               //top: false,
               child: ScrollablePageView(
                 scrollPhysics:
-                    controlNotifier.mediaPath.isEmpty && itemProvider.draggableWidget.isEmpty && !controlNotifier.isPainting && !controlNotifier.isTextEditing,
+                    controlNotifier.mediaPath.isEmpty && itemProvider.editableItems.isEmpty && !controlNotifier.isPainting && !controlNotifier.isTextEditing,
                 pageController: scrollProvider.pageController,
                 gridController: scrollProvider.gridController,
                 mainView: Column(
@@ -184,7 +184,8 @@ class _MainViewState extends State<MainView> {
                                                     colors: [colorProvider.color1, colorProvider.color2],
                                                     begin: Alignment.topCenter,
                                                     end: Alignment.bottomCenter,
-                                                  )),
+                                                ),
+                                        ),
                                         child: GestureDetector(
                                           onScaleStart: _onScaleStart,
                                           onScaleUpdate: _onScaleUpdate,
@@ -199,7 +200,7 @@ class _MainViewState extends State<MainView> {
                                               ),
 
                                               ///list items
-                                              ...itemProvider.draggableWidget.map((editableItem) {
+                                              ...itemProvider.editableItems.map((editableItem) {
                                                 return DraggableWidget(
                                                   context: context,
                                                   draggableWidget: editableItem,
@@ -262,10 +263,10 @@ class _MainViewState extends State<MainView> {
                             ),
 
                             /// middle text
-                            if (itemProvider.draggableWidget.isEmpty &&
+                            if (itemProvider.editableItems.isEmpty &&
                                 !controlNotifier.isTextEditing &&
                                 paintingProvider.lines.isEmpty &&
-                                canEdit(itemProvider.draggableWidget))
+                                canEdit(itemProvider.editableItems))
                               IgnorePointer(
                                 ignoring: true,
                                 child: Align(
@@ -282,7 +283,7 @@ class _MainViewState extends State<MainView> {
                               ),
 
                             /// top tools
-                            if (canEdit(itemProvider.draggableWidget))
+                            if (canEdit(itemProvider.editableItems))
                               Visibility(
                                 visible: !controlNotifier.isTextEditing && !controlNotifier.isPainting,
                                 child: Align(
@@ -290,8 +291,9 @@ class _MainViewState extends State<MainView> {
                                     child: TopTools(
                                     contentKey: contentKey,
                                     context: context,
-                                  )),
-                            ),
+                                  ),
+                                ),
+                              ),
 
                             /// delete item when the item is in position
                             DeleteItem(
@@ -322,13 +324,11 @@ class _MainViewState extends State<MainView> {
                     if (!kIsWeb)
                       BottomTools(
                         contentKey: contentKey,
-                        onDone: (bytes) {
-                          setState(() {
-                            widget.onDone!(bytes);
-                          });
-                        },
+                        editableItems: itemProvider.editableItems,
+                        onDone: widget.onDone!,
                         onDoneButtonStyle: widget.onDoneButtonStyle,
                         editorBackgroundColor: widget.editorBackgroundColor,
+                        mediaPath: controlNotifier.mediaPath,
                       ),
                   ],
                 ),
@@ -338,7 +338,7 @@ class _MainViewState extends State<MainView> {
                   singlePick: true,
                   requestType: RequestType.common,
                   appBarColor: widget.editorBackgroundColor ?? Colors.black,
-                  gridViewPhysics: itemProvider.draggableWidget.isEmpty ? const NeverScrollableScrollPhysics() : const ScrollPhysics(),
+                  gridViewPhysics: itemProvider.editableItems.isEmpty ? const NeverScrollableScrollPhysics() : const ScrollPhysics(),
                   pathList: (final List<PickedAssetModel> pickedAssets) {
                     final PickedAssetModel pickedAsset = pickedAssets.single;
 
@@ -357,8 +357,8 @@ class _MainViewState extends State<MainView> {
 
                     controlNotifier.mediaPath = pickedAsset.path!.toString();
                     if (controlNotifier.mediaPath.isNotEmpty) {
-                      itemProvider.draggableWidget.insert(
-                          0,
+                      itemProvider.editableItems.insert(
+                        0,
                         EditableItem(
                           type: type,
                           position: const Offset(0.0, 0),
@@ -477,7 +477,7 @@ class _MainViewState extends State<MainView> {
 
   /// delete item widget with offset position
   void _deleteItemOnCoordinates(EditableItem item, PointerUpEvent details) {
-    var itemProvider = Provider.of<DraggableWidgetNotifier>(context, listen: false).draggableWidget;
+    var itemProvider = Provider.of<DraggableWidgetNotifier>(context, listen: false).editableItems;
     _inAction = false;
     if (item.type == ItemType.image) {
     } else if (item.type == ItemType.text && item.position.dy >= 0.75.h && item.position.dx >= -0.4.w && item.position.dx <= 0.2.w ||

@@ -1,27 +1,38 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_media_picker/gallery_media_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:stories_editor/src/domain/models/editable_items.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/control_provider.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/draggable_widget_notifier.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/scroll_notifier.dart';
 import 'package:stories_editor/src/domain/sevices/save_as_image.dart';
+import 'package:stories_editor/src/presentation/draggable_items/video_player_wrapper.dart';
+import 'package:stories_editor/src/presentation/utils/constants/app_enums.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
+import 'package:video_trimmer/video_trimmer.dart';
 
 class BottomTools extends StatelessWidget {
   final GlobalKey contentKey;
-  final Function(String imageUri) onDone;
+  final Function(String contentUri) onDone;
   final Widget? onDoneButtonStyle;
+  final List<EditableItem> editableItems;
+  final String? mediaPath;
 
   /// editor background color
   final Color? editorBackgroundColor;
-  const BottomTools(
-      {Key? key,
-      required this.contentKey,
-      required this.onDone,
-      this.onDoneButtonStyle,
-      this.editorBackgroundColor})
-      : super(key: key);
+
+  const BottomTools({
+    Key? key,
+    required this.contentKey,
+    required this.editableItems,
+    required this.onDone,
+    this.mediaPath,
+    this.onDoneButtonStyle,
+    this.editorBackgroundColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,25 +60,26 @@ class BottomTools extends StatelessWidget {
                                   onTap: () {
                                     /// scroll to gridView page
                                     if (controlNotifier.mediaPath.isEmpty) {
-                                      scrollNotifier.pageController
-                                          .animateToPage(1,
-                                              duration: const Duration(
-                                                  milliseconds: 300),
-                                              curve: Curves.ease);
+                                      scrollNotifier.pageController.animateToPage(
+                                        1,
+                                        duration: const Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
                                     }
                                   },
                                   child: const CoverThumbnail(
                                     thumbnailQuality: 150,
                                     requestType: RequestType.common,
                                   ),
-                                ))
+                                ),
+                              )
 
                             /// return clear [imagePath] provider
                             : GestureDetector(
                                 onTap: () {
                                   /// clear image url variable
                                   controlNotifier.mediaPath = '';
-                                  itemNotifier.draggableWidget.removeAt(0);
+                                  itemNotifier.editableItems.removeAt(0);
                                 },
                                 child: Container(
                                   height: 45,
@@ -129,6 +141,30 @@ class BottomTools extends StatelessWidget {
                       scale: 0.9,
                       child: AnimatedOnTapButton(
                           onTap: () async {
+                            if (editableItems.any((final EditableItem item) => item.type == ItemType.video)) {
+                              assert(editableItems.where((final EditableItem item) => item.type == ItemType.video).length == 1,
+                                  'Only one video is allowed in the story');
+                              assert(mediaPath != null, 'Media path is required for video trimming');
+
+                              final EditableItem video = editableItems.firstWhere((final EditableItem item) => item.type == ItemType.video);
+
+                              final Trimmer trimmer = Trimmer();
+                              await trimmer.loadVideo(videoFile: File(mediaPath!));
+                              await trimmer.saveTrimmedVideo(
+                                  startValue: 0,
+                                  endValue: VideoPlayerWrapper.maxVideoDuration.inMilliseconds.toDouble(),
+                                  onSave: (final String? output) {
+                                    if (output == null || output.isEmpty) {
+                                      throw Exception('Error saving video');
+                                    }
+
+                                    onDone(output);
+                                  });
+
+                              return;
+                            }
+
+                            // Image management
                             String pngUri;
                             await takePicture(
                                     contentKey: contentKey,

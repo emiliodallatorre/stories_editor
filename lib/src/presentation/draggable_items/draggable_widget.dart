@@ -295,8 +295,8 @@ class DraggableWidget extends StatelessWidget {
     editorProvider.animationType = item.animationType;
     editorProvider.textList = item.textList;
     editorProvider.fontAnimationIndex = item.fontAnimationIndex;
-    itemProvider.draggableWidget
-        .removeAt(itemProvider.draggableWidget.indexOf(item));
+    itemProvider.editableItems
+        .removeAt(itemProvider.editableItems.indexOf(item));
     editorProvider.fontFamilyController = PageController(
       initialPage: item.fontFamily,
       viewportFraction: .1,

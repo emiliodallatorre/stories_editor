@@ -29,7 +29,7 @@ Future createGiphyItem({required BuildContext context, required giphyKey}) async
 
   /// create item of type GIF
   if (editableItem.giphy != null) {
-    editableItem.draggableWidget.add(EditableItem(
+    editableItem.editableItems.add(EditableItem(
       type: ItemType.gif,
       position: const Offset(0.0, 0.0),
     )..gif = editableItem.giphy!);
@@ -107,7 +107,7 @@ Future<bool> exitDialog({required context, required contentKey}) async {
                       onTap: () async {
                         final paintingProvider = Provider.of<PaintingNotifier>(context, listen: false);
                         final widgetProvider = Provider.of<DraggableWidgetNotifier>(context, listen: false);
-                        if (paintingProvider.lines.isNotEmpty || widgetProvider.draggableWidget.isNotEmpty) {
+                        if (paintingProvider.lines.isNotEmpty || widgetProvider.editableItems.isNotEmpty) {
                           /// save image
                           var response = await takePicture(contentKey: contentKey, context: context, saveToGallery: true);
                           if (response) {
@@ -159,7 +159,7 @@ _resetDefaults({required BuildContext context}) {
   final controlProvider = Provider.of<ControlNotifier>(context, listen: false);
   final editingProvider = Provider.of<TextEditingNotifier>(context, listen: false);
   paintingProvider.lines.clear();
-  widgetProvider.draggableWidget.clear();
+  widgetProvider.editableItems.clear();
   widgetProvider.setDefaults();
   paintingProvider.resetDefaults();
   editingProvider.setDefaults();

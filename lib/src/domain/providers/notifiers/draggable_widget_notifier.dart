@@ -4,8 +4,8 @@ import 'package:stories_editor/src/domain/models/editable_items.dart';
 
 class DraggableWidgetNotifier extends ChangeNotifier {
   List<EditableItem> _draggableWidget = [];
-  List<EditableItem> get draggableWidget => _draggableWidget;
-  set draggableWidget(List<EditableItem> item) {
+  List<EditableItem> get editableItems => _draggableWidget;
+  set editableItems(List<EditableItem> item) {
     _draggableWidget = item;
     notifyListeners();
   }

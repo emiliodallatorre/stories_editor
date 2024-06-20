@@ -68,7 +68,7 @@ class _TopToolsState extends State<TopTools> {
                     backGroundColor: Colors.black12,
                     onTap: () async {
                       if (paintingNotifier.lines.isNotEmpty ||
-                          itemNotifier.draggableWidget.isNotEmpty) {
+                          itemNotifier.editableItems.isNotEmpty) {
                         var response = await takePicture(
                             contentKey: widget.contentKey,
                             context: context,

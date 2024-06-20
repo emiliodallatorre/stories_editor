@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWrapper extends StatefulWidget {
+  static const Duration maxVideoDuration = Duration(seconds: 15);
+
   final String? mediaPath;
 
   const VideoPlayerWrapper({super.key, required this.mediaPath});
@@ -14,7 +16,6 @@ class VideoPlayerWrapper extends StatefulWidget {
 }
 
 class _VideoPlayerWrapperState extends State<VideoPlayerWrapper> {
-  static const Duration maxVideoDuration = Duration(seconds: 15);
 
   final ScreenUtil screenUtil = ScreenUtil();
 
@@ -32,7 +33,7 @@ class _VideoPlayerWrapperState extends State<VideoPlayerWrapper> {
     videoPlayerController.initialize().whenComplete(() {
       videoPlayerController.play();
 
-      if (videoPlayerController.value.duration > maxVideoDuration) {
+      if (videoPlayerController.value.duration > VideoPlayerWrapper.maxVideoDuration) {
         videoPlayerController.addListener(maxDurationListener);
       } else {
         videoPlayerController.setLooping(true);
@@ -45,7 +46,7 @@ class _VideoPlayerWrapperState extends State<VideoPlayerWrapper> {
   }
 
   void maxDurationListener() {
-    if (videoPlayerController.value.position >= maxVideoDuration) {
+    if (videoPlayerController.value.position >= VideoPlayerWrapper.maxVideoDuration) {
       videoPlayerController.seekTo(Duration.zero);
       videoPlayerController.play();
     }
