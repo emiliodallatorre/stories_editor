@@ -106,7 +106,7 @@ class TopTextTools extends StatelessWidget {
                     )),
               ),
 
-              Spacer(),
+              const Spacer(),
 
               /// close and create item
               GestureDetector(

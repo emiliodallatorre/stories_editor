@@ -32,9 +32,9 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final _editorNotifier = Provider.of<TextEditingNotifier>(widget.context, listen: false);
-      _editorNotifier
-        ..textController.text = _editorNotifier.text
+      final editorNotifier = Provider.of<TextEditingNotifier>(widget.context, listen: false);
+      editorNotifier
+        ..textController.text = editorNotifier.text
         ..fontFamilyController = PageController(viewportFraction: .125);
     });
 
@@ -143,7 +143,7 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
   }
 
   void _onTap(context, ControlNotifier controlNotifier, TextEditingNotifier editorNotifier) {
-    final _editableItemNotifier = Provider.of<DraggableWidgetNotifier>(context, listen: false);
+    final editableItemNotifier = Provider.of<DraggableWidgetNotifier>(context, listen: false);
 
     /// create text list
     if (editorNotifier.text.trim().isNotEmpty) {
@@ -160,7 +160,7 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
       }
 
       /// create Text Item
-      _editableItemNotifier.draggableWidget.add(EditableItem(
+      editableItemNotifier.draggableWidget.add(EditableItem(
           type: ItemType.text, position: const Offset(0.0, 0.0))
         ..text = editorNotifier.text.trim()
         ..backGroundColor = editorNotifier.backGroundColor
