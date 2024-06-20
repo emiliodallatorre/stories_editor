@@ -9,7 +9,7 @@ import 'package:stories_editor/src/domain/providers/notifiers/draggable_widget_n
 import 'package:stories_editor/src/domain/providers/notifiers/painting_notifier.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/text_editing_notifier.dart';
 import 'package:stories_editor/src/domain/sevices/save_as_image.dart';
-import 'package:stories_editor/src/presentation/utils/Extensions/hexColor.dart';
+import 'package:stories_editor/src/presentation/utils/Extensions/hex_color.dart';
 import 'package:stories_editor/src/presentation/utils/constants/app_enums.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
 
