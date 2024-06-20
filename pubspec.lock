@@ -160,9 +160,11 @@ packages:
   gallery_media_picker:
     dependency: "direct main"
     description:
-      path: "../gallery_media_picker"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: b2f1602ddb6d72040f2c83fb1b3694b18b296bae
+      url: "https://github.com/emiliodallatorre/gallery_media_picker"
+    source: git
     version: "0.1.0+3"
   html:
     dependency: transitive

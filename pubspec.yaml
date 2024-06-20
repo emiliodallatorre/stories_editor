@@ -29,8 +29,8 @@ dependencies:
       url: https://github.com/nguyenxdat/image_gallery_saver.git
   #own packages
   gallery_media_picker:
-    # git: https://github.com/emiliodallatorre/gallery_media_picker
-    path: ../gallery_media_picker
+    git: https://github.com/emiliodallatorre/gallery_media_picker
+    # path: ../gallery_media_picker
 
 
   modal_gif_picker:
