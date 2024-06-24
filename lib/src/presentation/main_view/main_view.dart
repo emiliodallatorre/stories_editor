@@ -161,7 +161,9 @@ class _MainViewState extends State<MainView> {
                               onScaleStart: _onScaleStart,
                               onScaleUpdate: _onScaleUpdate,
                               onTap: () {
-                                controlNotifier.isTextEditing = !controlNotifier.isTextEditing;
+                                if (canEdit(itemProvider.editableItems)) {
+                                  controlNotifier.isTextEditing = !controlNotifier.isTextEditing;
+                                }
                               },
                               child: Align(
                                 alignment: Alignment.topCenter,
@@ -305,9 +307,7 @@ class _MainViewState extends State<MainView> {
                             /// show text editor
                             Visibility(
                               visible: controlNotifier.isTextEditing,
-                              child: TextEditor(
-                                context: context,
-                              ),
+                              child: TextEditor(context: context),
                             ),
 
                             /// show painting sketch

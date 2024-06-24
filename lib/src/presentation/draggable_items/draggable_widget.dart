@@ -18,6 +18,8 @@ import 'package:stories_editor/src/presentation/widgets/file_image_bg.dart';
 
 class DraggableWidget extends StatelessWidget {
   final EditableItem draggableWidget;
+  final bool? canBeDraggedOverride;
+
   final Function(PointerDownEvent)? onPointerDown;
   final Function(PointerUpEvent)? onPointerUp;
   final Function(PointerMoveEvent)? onPointerMove;
@@ -26,10 +28,13 @@ class DraggableWidget extends StatelessWidget {
     Key? key,
     required this.context,
     required this.draggableWidget,
+    this.canBeDraggedOverride,
     this.onPointerDown,
     this.onPointerUp,
     this.onPointerMove,
   }) : super(key: key);
+
+  bool get canBeDragged => canBeDraggedOverride ?? (draggableWidget.type != ItemType.video);
 
   @override
   Widget build(BuildContext context) {
@@ -158,14 +163,16 @@ class DraggableWidget extends StatelessWidget {
             : draggableWidget.scale,
         child: Transform.rotate(
           angle: draggableWidget.rotation,
-          child: Listener(
-            onPointerDown: onPointerDown,
+          child: canBeDragged
+              ? Listener(
+                  onPointerDown: onPointerDown,
             onPointerUp: onPointerUp,
             onPointerMove: onPointerMove,
 
             /// show widget
             child: overlayWidget,
-          ),
+                )
+              : overlayWidget,
         ),
       ),
     );
