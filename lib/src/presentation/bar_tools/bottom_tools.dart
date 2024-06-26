@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_media_picker/gallery_media_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:random_string/random_string.dart';
 import 'package:stories_editor/src/domain/models/editable_items.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/control_provider.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/draggable_widget_notifier.dart';
@@ -153,6 +154,7 @@ class BottomTools extends StatelessWidget {
                               await trimmer.saveTrimmedVideo(
                                   startValue: 0,
                                   endValue: VideoPlayerWrapper.maxVideoDuration.inMilliseconds.toDouble(),
+                                  videoFileName: "${randomAlphaNumeric(20)}.mp4",
                                   onSave: (final String? output) {
                                     if (output == null || output.isEmpty) {
                                       throw Exception('Error saving video');
