@@ -285,15 +285,15 @@ class _MainViewState extends State<MainView> {
                               ),
 
                             /// top tools
-                            if (canEdit(itemProvider.editableItems))
                               Visibility(
                                 visible: !controlNotifier.isTextEditing && !controlNotifier.isPainting,
                                 child: Align(
                                     alignment: Alignment.topCenter,
                                     child: TopTools(
-                                    contentKey: contentKey,
+                                  contentKey: contentKey,
                                     context: context,
-                                  ),
+                                  canEdit: canEdit(itemProvider.editableItems),
+                                ),
                                 ),
                               ),
 
