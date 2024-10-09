@@ -13,8 +13,14 @@ import 'package:stories_editor/src/presentation/widgets/tool_button.dart';
 class TopTools extends StatefulWidget {
   final GlobalKey contentKey;
   final BuildContext context;
-  const TopTools({Key? key, required this.contentKey, required this.context})
-      : super(key: key);
+  final bool canEdit;
+
+  const TopTools({
+    Key? key,
+    required this.contentKey,
+    required this.context,
+    this.canEdit = true,
+  }) : super(key: key);
 
   @override
   _TopToolsState createState() => _TopToolsState();
@@ -48,8 +54,11 @@ class _TopToolsState extends State<TopTools> {
                     child: const Icon(
                       Icons.close,
                       color: Colors.white,
-                    )),
-                if (controlNotifier.mediaPath.isEmpty)
+                  ),
+                ),
+
+                if (widget.canEdit) ...[
+                  if (controlNotifier.mediaPath.isEmpty)
                   _selectColor(
                       controlProvider: controlNotifier,
                       onTap: () {
@@ -130,6 +139,7 @@ class _TopToolsState extends State<TopTools> {
                     size: 20,
                   ),
                 ),
+                ],
               ],
             ),
           ),
