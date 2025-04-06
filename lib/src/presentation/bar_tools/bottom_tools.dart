@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_native_video_trimmer/flutter_native_video_trimmer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_media_picker/gallery_media_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:random_string/random_string.dart';
 import 'package:stories_editor/src/domain/models/editable_items.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/control_provider.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/draggable_widget_notifier.dart';
@@ -104,9 +101,7 @@ class BottomTools extends StatelessWidget {
                 if (controlNotifier.middleBottomWidget != null)
                   Expanded(
                     child: Center(
-                      child: Container(
-                          alignment: Alignment.bottomCenter,
-                          child: controlNotifier.middleBottomWidget),
+                      child: Container(alignment: Alignment.bottomCenter, child: controlNotifier.middleBottomWidget),
                     ),
                   )
                 else
@@ -123,11 +118,7 @@ class BottomTools extends StatelessWidget {
                           ),
                           const Text(
                             'Stories Creator',
-                            style: TextStyle(
-                                color: Colors.white38,
-                                letterSpacing: 1.5,
-                                fontSize: 9.2,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(color: Colors.white38, letterSpacing: 1.5, fontSize: 9.2, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -141,75 +132,63 @@ class BottomTools extends StatelessWidget {
                     child: Transform.scale(
                       scale: 0.9,
                       child: AnimatedOnTapButton(
-                          onTap: () async {
-                            if (editableItems.any((final EditableItem item) => item.type == ItemType.video)) {
-                              assert(editableItems.where((final EditableItem item) => item.type == ItemType.video).length == 1,
-                                  'Only one video is allowed in the story');
-                              assert(mediaPath != null, 'Media path is required for video trimming');
+                        onTap: () async {
+                          if (editableItems.any((final EditableItem item) => item.type == ItemType.video)) {
+                            assert(editableItems.where((final EditableItem item) => item.type == ItemType.video).length == 1,
+                                'Only one video is allowed in the story');
+                            assert(mediaPath != null, 'Media path is required for video trimming');
 
-                              final EditableItem video = editableItems.firstWhere((final EditableItem item) => item.type == ItemType.video);
+                            final EditableItem video = editableItems.firstWhere((final EditableItem item) => item.type == ItemType.video);
 
-                              final VideoTrimmer trimmer = VideoTrimmer();
-                              await trimmer.loadVideo(mediaPath!);
-                              final String await trimmer.trimVideo(
-                                  startTimeMs: 0,
-                                  endTimeMs: VideoPlayerWrapper.maxVideoDuration.inMilliseconds,
-                                  videoFileName: "${randomAlphaNumeric(20)}.mp4",
-                                  onSave: (final String? output) {
-                                    if (output == null || output.isEmpty) {
-                                      throw Exception('Error saving video');
-                                    }
-
-                                    onDone(output);
-                                  });
-
-                              return;
+                            final VideoTrimmer trimmer = VideoTrimmer();
+                            await trimmer.loadVideo(mediaPath!);
+                            final String? fileOutput = await trimmer.trimVideo(
+                              startTimeMs: 0,
+                              endTimeMs: VideoPlayerWrapper.maxVideoDuration.inMilliseconds,
+                            );
+                            if (fileOutput == null || fileOutput.isEmpty) {
+                              throw Exception('Error saving video');
+                            } else {
+                              onDone(fileOutput);
                             }
 
-                            // Image management
-                            String pngUri;
-                            await takePicture(
-                                    contentKey: contentKey,
-                                    context: context,
-                                    saveToGallery: false)
-                                .then((bytes) {
-                              if (bytes != null) {
-                                pngUri = bytes;
-                                onDone(pngUri);
-                              } else {
-                                throw Exception('Error saving image');
-                              }
-                            });
-                          },
-                          child: onDoneButtonStyle ??
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    left: 12, right: 5, top: 4, bottom: 4),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(
-                                        color: Colors.white, width: 1.5)),
-                                child: const Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        'Share',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            letterSpacing: 1.5,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 5),
-                                        child: Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Colors.white,
-                                          size: 15,
-                                        ),
-                                      ),
-                                    ]),
-                              )),
+                            return;
+                          }
+
+                          // Image management
+                          String pngUri;
+                          await takePicture(contentKey: contentKey, context: context, saveToGallery: false).then((bytes) {
+                            if (bytes != null) {
+                              pngUri = bytes;
+                              onDone(pngUri);
+                            } else {
+                              throw Exception('Error saving image');
+                            }
+                          });
+                        },
+                        child: onDoneButtonStyle ??
+                            Container(
+                              padding: const EdgeInsets.only(left: 12, right: 5, top: 4, bottom: 4),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), border: Border.all(color: Colors.white, width: 1.5)),
+                              child: const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Share',
+                                    style: TextStyle(color: Colors.white, letterSpacing: 1.5, fontSize: 16, fontWeight: FontWeight.w400),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 5),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Colors.white,
+                                      size: 15,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                      ),
                     ),
                   ),
                 ),
@@ -225,9 +204,7 @@ class BottomTools extends StatelessWidget {
     return Container(
       height: 45,
       width: 45,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(width: 1.4, color: Colors.white)),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(width: 1.4, color: Colors.white)),
       child: child,
     );
   }
