@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_native_video_trimmer/flutter_native_video_trimmer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_media_picker/gallery_media_picker.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,6 @@ import 'package:stories_editor/src/domain/sevices/save_as_image.dart';
 import 'package:stories_editor/src/presentation/draggable_items/video_player_wrapper.dart';
 import 'package:stories_editor/src/presentation/utils/constants/app_enums.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
-import 'package:video_trimmer/video_trimmer.dart';
 
 class BottomTools extends StatelessWidget {
   final GlobalKey contentKey;
@@ -149,11 +149,11 @@ class BottomTools extends StatelessWidget {
 
                               final EditableItem video = editableItems.firstWhere((final EditableItem item) => item.type == ItemType.video);
 
-                              final Trimmer trimmer = Trimmer();
-                              await trimmer.loadVideo(videoFile: File(mediaPath!));
-                              await trimmer.saveTrimmedVideo(
-                                  startValue: 0,
-                                  endValue: VideoPlayerWrapper.maxVideoDuration.inMilliseconds.toDouble(),
+                              final VideoTrimmer trimmer = VideoTrimmer();
+                              await trimmer.loadVideo(mediaPath!);
+                              final String await trimmer.trimVideo(
+                                  startTimeMs: 0,
+                                  endTimeMs: VideoPlayerWrapper.maxVideoDuration.inMilliseconds,
                                   videoFileName: "${randomAlphaNumeric(20)}.mp4",
                                   onSave: (final String? output) {
                                     if (output == null || output.isEmpty) {
