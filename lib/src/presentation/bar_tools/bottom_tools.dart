@@ -138,7 +138,7 @@ class BottomTools extends StatelessWidget {
                                 'Only one video is allowed in the story');
                             assert(mediaPath != null, 'Media path is required for video trimming');
 
-                            final EditableItem video = editableItems.firstWhere((final EditableItem item) => item.type == ItemType.video);
+                            // final EditableItem video = editableItems.firstWhere((final EditableItem item) => item.type == ItemType.video);
 
                             final VideoTrimmer trimmer = VideoTrimmer();
                             await trimmer.loadVideo(mediaPath!);
