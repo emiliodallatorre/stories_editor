@@ -79,7 +79,7 @@ flutter:
     - packages/stories_editor/assets/icons/pen.png
     - packages/stories_editor/assets/icons/pickColor.png
     - packages/stories_editor/assets/icons/return.png
-    - packages/stories_editor/assets/icmons/stickers.png
+    - packages/stories_editor/assets/icons/stickers.png
     - packages/stories_editor/assets/icons/text.png
     - packages/stories_editor/assets/icons/trash.png
     - packages/stories_editor/assets/icons/photo_filter.png
