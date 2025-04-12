@@ -1,6 +1,6 @@
 name: stories_editor
 description: This is a package created in the style of the instagram story creator, with which you can create images with images, texts, stickers (Gifs), finger drawing.
-version: 4.2.0
+version: 4.2.1+2
 homepage: https://github.com/resmedia-projects/stories_editor
 
 environment:
