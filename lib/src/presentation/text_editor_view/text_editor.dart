@@ -170,6 +170,12 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
   void _onTap(context, ControlNotifier controlNotifier, TextEditingNotifier editorNotifier) {
     final editableItemNotifier = Provider.of<DraggableWidgetNotifier>(context, listen: false);
 
+    // Per i testi obbligatori, se il campo è vuoto impostiamo un testo di default
+    if (widget.isMandatory && editorNotifier.text.trim().isEmpty) {
+      editorNotifier.text = "La tua last";
+      editorNotifier.textController.text = "La tua last";
+    }
+
     /// create text list
     if (editorNotifier.text.trim().isNotEmpty) {
       splitList = editorNotifier.text.split(' ');
@@ -203,6 +209,13 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
       
       editorNotifier.setDefaults();
       controlNotifier.isTextEditing = !controlNotifier.isTextEditing;
+    } else if (widget.isMandatory) {
+      // Se il testo è obbligatorio e il campo è vuoto, aggiungiamo comunque il testo di default
+      editorNotifier.text = "La tua last";
+      editorNotifier.textController.text = "La tua last";
+      
+      // Richiama ricorsivamente il metodo per creare l'elemento con il testo di default
+      _onTap(context, controlNotifier, editorNotifier);
     } else {
       editorNotifier.setDefaults();
       controlNotifier.isTextEditing = !controlNotifier.isTextEditing;
