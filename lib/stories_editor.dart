@@ -1,12 +1,15 @@
 // ignore_for_file: must_be_immutable
 library stories_editor;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stories_editor/generated/l10n.dart';
+import 'package:stories_editor/src/domain/models/geo_point.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/control_provider.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/draggable_widget_notifier.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/gradient_notifier.dart';
@@ -58,6 +61,15 @@ class StoriesEditor extends StatefulWidget {
   /// Editor locale
   final Locale locale;
 
+  /// Flag che indica se l'editor deve avere elementi obbligatori (testo e localizzazione)
+  final bool isLast;
+
+  /// GeoPoint per l'elemento di localizzazione (obbligatorio se isLast è true)
+  final GeoPoint? geoPoint;
+
+  /// Colore di sfondo per il testo obbligatorio
+  final Color textBackgroundColor;
+
   const StoriesEditor({
     Key? key,
     required this.giphyKey,
@@ -73,7 +85,11 @@ class StoriesEditor extends StatefulWidget {
     this.editorBackgroundColor,
     this.galleryThumbnailQuality,
     this.storyAspectRatio = 9 / 16,
-  }) : super(key: key);
+    this.isLast = false,
+    this.geoPoint,
+    this.textBackgroundColor = Colors.black54,
+  }) : assert(!isLast || geoPoint != null, 'geoPoint è obbligatorio quando isLast è true'),
+       super(key: key);
 
   @override
   _StoriesEditorState createState() => _StoriesEditorState();
@@ -85,7 +101,8 @@ class _StoriesEditorState extends State<StoriesEditor> {
     // Paint.enableDithering = true;
 
     WidgetsFlutterBinding.ensureInitialized();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.black,
     ));
@@ -139,6 +156,9 @@ class _StoriesEditorState extends State<StoriesEditor> {
               editorBackgroundColor: widget.editorBackgroundColor,
               galleryThumbnailQuality: widget.galleryThumbnailQuality,
               storyAspectRatio: widget.storyAspectRatio,
+              isLast: widget.isLast,
+              location: widget.isLast ? widget.geoPoint : null,
+              textBackgroundColor: widget.textBackgroundColor,
             ),
           ),
         ),

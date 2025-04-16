@@ -11,6 +11,7 @@ import 'package:stories_editor/src/domain/providers/notifiers/control_provider.d
 import 'package:stories_editor/src/domain/providers/notifiers/draggable_widget_notifier.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/gradient_notifier.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/text_editing_notifier.dart';
+import 'package:stories_editor/src/presentation/draggable_items/location_widget.dart';
 import 'package:stories_editor/src/presentation/draggable_items/video_player_wrapper.dart';
 import 'package:stories_editor/src/presentation/utils/constants/app_enums.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
@@ -34,7 +35,8 @@ class DraggableWidget extends StatelessWidget {
     this.onPointerMove,
   }) : super(key: key);
 
-  bool get canBeDragged => canBeDraggedOverride ?? (draggableWidget.type != ItemType.video);
+  bool get canBeDragged =>
+      canBeDraggedOverride ?? (draggableWidget.type != ItemType.video);
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +97,14 @@ class DraggableWidget extends StatelessWidget {
             ),
           ),
         );
+        break;
+
+      case ItemType.location:
+        overlayWidget = draggableWidget.location != null
+            ? LocationWidget(
+                location: draggableWidget.location!,
+              )
+            : const SizedBox.shrink();
         break;
 
       /// image [file_image_gb.dart]
@@ -166,11 +176,11 @@ class DraggableWidget extends StatelessWidget {
           child: canBeDragged
               ? Listener(
                   onPointerDown: onPointerDown,
-            onPointerUp: onPointerUp,
-            onPointerMove: onPointerMove,
+                  onPointerUp: onPointerUp,
+                  onPointerMove: onPointerMove,
 
-            /// show widget
-            child: overlayWidget,
+                  /// show widget
+                  child: overlayWidget,
                 )
               : overlayWidget,
         ),
@@ -268,6 +278,9 @@ class DraggableWidget extends StatelessWidget {
     } else if (draggableWidget.type == ItemType.gif) {
       top = screenUtil.screenWidth / 1.18;
       return top;
+    } else if (draggableWidget.type == ItemType.location) {
+      top = screenUtil.screenWidth / 1.18;
+      return top;
     }
   }
 
@@ -277,6 +290,9 @@ class DraggableWidget extends StatelessWidget {
       scale = 0.4;
       return scale;
     } else if (draggableWidget.type == ItemType.gif) {
+      scale = 0.3;
+      return scale;
+    } else if (draggableWidget.type == ItemType.location) {
       scale = 0.3;
       return scale;
     }

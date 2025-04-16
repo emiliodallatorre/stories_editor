@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:modal_gif_picker/modal_gif_picker.dart';
+import 'package:stories_editor/src/domain/models/geo_point.dart';
 import 'package:stories_editor/src/presentation/utils/constants/app_enums.dart';
 
 class EditableItem {
   /// delete
   bool deletePosition = false;
+
+  /// mandatory item (can't be deleted)
+  bool isMandatory = false;
 
   /// item position
   Offset position = const Offset(0.0, 0.0);
@@ -26,5 +30,12 @@ class EditableItem {
   /// Gif
   GiphyGif gif = GiphyGif(id: '0');
 
-  EditableItem({required this.type, required this.position});
+  /// Location
+  GeoPoint? location;
+
+  EditableItem({
+    required this.type,
+    required this.position,
+    this.isMandatory = false,
+  });
 }
