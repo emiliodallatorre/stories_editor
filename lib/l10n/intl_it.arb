@@ -1,7 +1,7 @@
 {
   "discardEdits": "Annullare le modifiche?",
   "discardEditsExtended": "Se si esce ora, tutte le modifiche apportate alle feature non salvate andranno perse.",
-  "discard": "Annulla",
+  "discard": "Annulla modifiche",
   "successfullySaved": "Salvato con successo",
   "error": "Errore",
   "nothingToSave": "Nulla da salvare",
