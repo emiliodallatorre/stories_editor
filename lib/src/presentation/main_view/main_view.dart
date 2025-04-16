@@ -66,13 +66,13 @@ class MainView extends StatefulWidget {
 
   /// aspect ratio of the final image
   final double storyAspectRatio;
-  
+
   /// Flag che indica se l'editor deve avere elementi obbligatori
   final bool isLast;
-  
+
   /// GeoPoint per l'elemento di localizzazione quando isLast è true
   final GeoPoint? location;
-  
+
   /// Colore di sfondo per il testo obbligatorio quando isLast è true
   final Color? textBackgroundColor;
 
@@ -120,7 +120,8 @@ class _MainViewState extends State<MainView> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var control = Provider.of<ControlNotifier>(context, listen: false);
-      var itemProvider = Provider.of<DraggableWidgetNotifier>(context, listen: false);
+      var itemProvider =
+          Provider.of<DraggableWidgetNotifier>(context, listen: false);
 
       /// initialize control variable provider
       control.giphyKey = widget.giphyKey;
@@ -139,7 +140,7 @@ class _MainViewState extends State<MainView> {
       if (widget.gradientColors != null) {
         control.gradientColors = widget.gradientColors;
       }
-      
+
       /// Aggiungi elementi obbligatori se isLast è true
       if (widget.isLast) {
         // Aggiungi il testo obbligatorio
@@ -148,11 +149,11 @@ class _MainViewState extends State<MainView> {
           position: const Offset(0.0, 0.0),
           isMandatory: true,
         );
-        textItem.text = "Testo di prova";
+        textItem.text = "La tua Last";
         textItem.textColor = Colors.white;
-        textItem.backGroundColor = widget.textBackgroundColor ?? Colors.black54;
+        textItem.backGroundColor = widget.textBackgroundColor ?? Colors.pink;
         itemProvider.editableItems.add(textItem);
-        
+
         // Aggiungi il widget di localizzazione obbligatorio (se c'è il geoPoint)
         if (widget.location != null) {
           final locationItem = EditableItem(
@@ -588,6 +589,17 @@ class _MainViewState extends State<MainView> {
         Provider.of<DraggableWidgetNotifier>(context, listen: false)
             .editableItems;
     _inAction = false;
+    
+    // Verificare se l'elemento è obbligatorio (isMandatory)
+    // Se è obbligatorio, non permettere l'eliminazione
+    if (item.isMandatory) {
+      setState(() {
+        _activeItem = null;
+        _isDeletePosition = false;
+      });
+      return;
+    }
+    
     if (item.type == ItemType.image) {
     } else if (item.type == ItemType.text &&
             item.position.dy >= 0.75.h &&

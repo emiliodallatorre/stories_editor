@@ -22,6 +22,12 @@ class DeleteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final ScreenUtil screenUtil = ScreenUtil();
 
+    // Non mostrare il widget di eliminazione se non c'è un elemento attivo
+    // o se l'elemento è un'immagine o se è un elemento obbligatorio
+    bool shouldShow = _activeItem != null && 
+                     _activeItem!.type != ItemType.image &&
+                     !(_activeItem!.isMandatory);
+
     return Positioned(
         bottom: 40.h,
         right: 0,
@@ -29,9 +35,7 @@ class DeleteItem extends StatelessWidget {
         child: AnimatedScale(
           curve: Curves.easeIn,
           duration: const Duration(milliseconds: 200),
-          scale: _activeItem != null && _activeItem!.type != ItemType.image
-              ? 1.0
-              : 0.0,
+          scale: shouldShow ? 1.0 : 0.0,
           child: SizedBox(
             width: screenUtil.screenWidth,
             child: Center(
@@ -54,23 +58,25 @@ class DeleteItem extends StatelessWidget {
                           )
                         : const SizedBox(),
                   ),
-                  AnimatedContainer(
-                    alignment: Alignment.center,
-                    duration: animationsDuration,
-                    height: isDeletePosition ? 55.0 : 45,
-                    width: isDeletePosition ? 55.0 : 45,
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.35),
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: const ImageIcon(
-                      AssetImage('assets/icons/trash.png',
-                          package: 'stories_editor'),
-                      color: Colors.white,
-                      size: 23,
-                    ),
-                  ),
+                  shouldShow
+                      ? AnimatedContainer(
+                          alignment: Alignment.center,
+                          duration: animationsDuration,
+                          height: isDeletePosition ? 55.0 : 45,
+                          width: isDeletePosition ? 55.0 : 45,
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.35),
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: const ImageIcon(
+                            AssetImage('assets/icons/trash.png',
+                                package: 'stories_editor'),
+                            color: Colors.white,
+                            size: 23,
+                          ),
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ),

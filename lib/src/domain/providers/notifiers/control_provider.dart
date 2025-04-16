@@ -113,4 +113,12 @@ class ControlNotifier extends ChangeNotifier {
     _isPhotoFilter = filter;
     notifyListeners();
   }
+  
+  // Flag per indicare se l'editor è in modalità "last"
+  bool _isLast = false;
+  bool get isLast => _isLast;
+  set isLast(bool last) {
+    _isLast = last;
+    notifyListeners();
+  }
 }
