@@ -13,6 +13,7 @@ class TextEditingNotifier extends ChangeNotifier {
   TextAnimationType _animationType = TextAnimationType.none;
   bool _isFontFamily = true;
   bool _isTextAnimation = false;
+  bool _isBackgroundColorSelection = false;
 
   PageController _fontFamilyController = PageController(viewportFraction: .125);
   PageController _textAnimationController =
@@ -23,7 +24,26 @@ class TextEditingNotifier extends ChangeNotifier {
   final List<Color> _textColorBackGround = [
     Colors.transparent,
     Colors.black,
-    Colors.white
+    Colors.white,
+    Colors.red,
+    Colors.pink,
+    Colors.purple,
+    Colors.deepPurple,
+    Colors.indigo,
+    Colors.blue,
+    Colors.lightBlue,
+    Colors.cyan,
+    Colors.teal,
+    Colors.green,
+    Colors.lightGreen,
+    Colors.lime,
+    Colors.yellow,
+    Colors.amber,
+    Colors.orange,
+    Colors.deepOrange,
+    Colors.brown,
+    Colors.grey,
+    Colors.blueGrey,
   ];
 
   int _currentAlign = 0;
@@ -52,13 +72,14 @@ class TextEditingNotifier extends ChangeNotifier {
   int get fontAnimationIndex => _fontAnimationIndex;
   TextAlign get textAlign => _textAlign;
   Color get backGroundColor => _backGroundColor;
+  TextAnimationType get animationType => _animationType;
   bool get isFontFamily => _isFontFamily;
   bool get isTextAnimation => _isTextAnimation;
+  bool get isBackgroundColorSelection => _isBackgroundColorSelection;
   PageController get fontFamilyController => _fontFamilyController;
   PageController get textAnimationController => _textAnimationController;
   TextEditingController get textController => _textController;
   List<String> get textList => _textList;
-  TextAnimationType get animationType => _animationType;
 
   set text(String text) {
     _text = text;
@@ -103,6 +124,11 @@ class TextEditingNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  set isBackgroundColorSelection(bool isSelection) {
+    _isBackgroundColorSelection = isSelection;
+    notifyListeners();
+  }
+
   set fontFamilyController(PageController controller) {
     _fontFamilyController = controller;
     notifyListeners();
@@ -120,6 +146,9 @@ class TextEditingNotifier extends ChangeNotifier {
 
   set backGroundColor(Color backGround) {
     _backGroundColor = backGround;
+    if (_backGroundColor != Colors.transparent) {
+      _textColor = _getContrastingTextColor(_backGroundColor) == Colors.white ? 0 : 1;
+    }
     notifyListeners();
   }
 
@@ -142,6 +171,9 @@ class TextEditingNotifier extends ChangeNotifier {
     if (_currentColorBackground < _textColorBackGround.length - 1) {
       _currentColorBackground += 1;
       _backGroundColor = _textColorBackGround[_currentColorBackground];
+      if (_backGroundColor != Colors.transparent) {
+        _textColor = _getContrastingTextColor(_backGroundColor) == Colors.white ? 0 : 1;
+      }
       notifyListeners();
     } else {
       _currentColorBackground = 0;
@@ -187,6 +219,7 @@ class TextEditingNotifier extends ChangeNotifier {
     _textAnimationController = PageController(viewportFraction: .125);
     _isFontFamily = true;
     _isTextAnimation = false;
+    _isBackgroundColorSelection = false;
     _textList = [];
     _animationType = TextAnimationType.none;
   }
@@ -195,5 +228,20 @@ class TextEditingNotifier extends ChangeNotifier {
     _textController.dispose();
     _fontFamilyController.dispose();
     _textAnimationController.dispose();
+  }
+
+  Color _getContrastingTextColor(Color backgroundColor) {
+    double luminance = (0.299 * backgroundColor.red + 
+                        0.587 * backgroundColor.green + 
+                        0.114 * backgroundColor.blue) / 255;
+    
+    return luminance > 0.5 ? Colors.black : Colors.white;
+  }
+  
+  Color getTextColorForBackground() {
+    if (_backGroundColor == Colors.transparent) {
+      return Colors.white; 
+    }
+    return _getContrastingTextColor(_backGroundColor);
   }
 }

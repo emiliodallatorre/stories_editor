@@ -394,7 +394,10 @@ class _MainViewState extends State<MainView> {
                             /// show text editor
                             Visibility(
                               visible: controlNotifier.isTextEditing,
-                              child: TextEditor(context: context),
+                              child: TextEditor(
+                                context: context,
+                                isMandatory: controlNotifier.isLast,
+                              ),
                             ),
 
                             /// show painting sketch
@@ -589,7 +592,7 @@ class _MainViewState extends State<MainView> {
         Provider.of<DraggableWidgetNotifier>(context, listen: false)
             .editableItems;
     _inAction = false;
-    
+
     // Verificare se l'elemento è obbligatorio (isMandatory)
     // Se è obbligatorio, non permettere l'eliminazione
     if (item.isMandatory) {
@@ -599,7 +602,7 @@ class _MainViewState extends State<MainView> {
       });
       return;
     }
-    
+
     if (item.type == ItemType.image) {
     } else if (item.type == ItemType.text &&
             item.position.dy >= 0.75.h &&

@@ -103,6 +103,7 @@ class DraggableWidget extends StatelessWidget {
         overlayWidget = draggableWidget.location != null
             ? LocationWidget(
                 location: draggableWidget.location!,
+                isMandatory: draggableWidget.isMandatory,
               )
             : const SizedBox.shrink();
         break;
