@@ -17,6 +17,7 @@ class TopLastTextTools extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              /// font family selector
               ToolButton(
                 onTap: () {
                   editorNotifier.isFontFamily = !editorNotifier.isFontFamily;
@@ -56,21 +57,21 @@ class TopLastTextTools extends StatelessWidget {
                     )),
               ),
 
-              /// background color button
+              /// background color button per testo obbligatorio
               ToolButton(
                 onTap: () {
                   // Toggle background color selection
                   editorNotifier.isBackgroundColorSelection = !editorNotifier.isBackgroundColorSelection;
                 },
                 child: Transform.scale(
-                    scale: 0.7,
+                    scale: 0.8,
                     child: Container(
                       decoration: BoxDecoration(
                         color: editorNotifier.backGroundColor != Colors.transparent 
                             ? editorNotifier.backGroundColor 
                             : Colors.grey.withOpacity(0.8),
                         borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Colors.white, width: 1),
+                        border: Border.all(color: editorNotifier.isBackgroundColorSelection ? Colors.white : Colors.transparent, width: 1.5),
                       ),
                       padding: const EdgeInsets.all(6),
                       child: const Icon(

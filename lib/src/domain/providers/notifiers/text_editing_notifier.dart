@@ -21,10 +21,15 @@ class TextEditingNotifier extends ChangeNotifier {
   TextEditingController _textController = TextEditingController();
 
   int _currentColorBackground = 0;
+  // Colori standard per i testi normali (NON obbligatori)
   final List<Color> _textColorBackGround = [
     Colors.transparent,
     Colors.black,
-    Colors.white,
+    Colors.white
+  ];
+  
+  // Colori per il testo obbligatorio (senza transparent, black, white)
+  final List<Color> _mandatoryTextBackgroundColors = [
     Colors.red,
     Colors.pink,
     Colors.purple,
@@ -123,7 +128,7 @@ class TextEditingNotifier extends ChangeNotifier {
     _isTextAnimation = isAnimation;
     notifyListeners();
   }
-
+  
   set isBackgroundColorSelection(bool isSelection) {
     _isBackgroundColorSelection = isSelection;
     notifyListeners();
@@ -146,6 +151,7 @@ class TextEditingNotifier extends ChangeNotifier {
 
   set backGroundColor(Color backGround) {
     _backGroundColor = backGround;
+    // Automatically set text color based on background brightness
     if (_backGroundColor != Colors.transparent) {
       _textColor = _getContrastingTextColor(_backGroundColor) == Colors.white ? 0 : 1;
     }
@@ -167,6 +173,7 @@ class TextEditingNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Metodo per cambiare il colore di sfondo per i testi NON obbligatori
   onBackGroundChange() {
     if (_currentColorBackground < _textColorBackGround.length - 1) {
       _currentColorBackground += 1;
@@ -180,6 +187,21 @@ class TextEditingNotifier extends ChangeNotifier {
       _backGroundColor = _textColorBackGround[_currentColorBackground];
       notifyListeners();
     }
+  }
+  
+  // Imposta il colore di sfondo per il testo obbligatorio
+  void setMandatoryTextBackgroundColor(Color color) {
+    _backGroundColor = color;
+    // Automatically set text color based on background brightness
+    if (_backGroundColor != Colors.transparent) {
+      _textColor = _getContrastingTextColor(_backGroundColor) == Colors.white ? 0 : 1;
+    }
+    notifyListeners();
+  }
+  
+  // Restituisce la lista di colori per lo sfondo del testo obbligatorio
+  List<Color> getMandatoryTextBackgroundColors() {
+    return _mandatoryTextBackgroundColors;
   }
 
   onAlignmentChange() {
@@ -229,7 +251,8 @@ class TextEditingNotifier extends ChangeNotifier {
     _fontFamilyController.dispose();
     _textAnimationController.dispose();
   }
-
+  
+  // Helper method to determine if text should be white or black based on background color
   Color _getContrastingTextColor(Color backgroundColor) {
     double luminance = (0.299 * backgroundColor.red + 
                         0.587 * backgroundColor.green + 
@@ -238,9 +261,10 @@ class TextEditingNotifier extends ChangeNotifier {
     return luminance > 0.5 ? Colors.black : Colors.white;
   }
   
+  // Get appropriate text color for a background
   Color getTextColorForBackground() {
     if (_backGroundColor == Colors.transparent) {
-      return Colors.white; 
+      return Colors.white; // Default white for transparent background
     }
     return _getContrastingTextColor(_backGroundColor);
   }

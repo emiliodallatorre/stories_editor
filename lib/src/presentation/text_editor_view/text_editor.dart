@@ -107,7 +107,7 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
                         Positioned(
                           bottom: bottomInset,
                           child: Visibility(
-                            visible: editorNotifier.isFontFamily && !editorNotifier.isTextAnimation,
+                            visible: editorNotifier.isFontFamily,
                             child: const Align(
                               alignment: Alignment.bottomCenter,
                               child: Padding(
@@ -192,14 +192,15 @@ class _TextEditorState extends State<TextEditor> with WidgetsBindingObserver {
         ..text = editorNotifier.text.trim()
         ..backGroundColor = editorNotifier.backGroundColor
         ..textColor = widget.isMandatory 
-            ? editorNotifier.getTextColorForBackground() // Direct Color object for mandatory text
-            : controlNotifier.colorList![editorNotifier.textColor] // Get Color from the list using index
+            ? editorNotifier.getTextColorForBackground() // Colore automatico per testi obbligatori
+            : controlNotifier.colorList![editorNotifier.textColor] // Colore scelto per testi normali
         ..fontFamily = editorNotifier.fontFamilyIndex
         ..fontSize = editorNotifier.textSize
-        ..fontAnimationIndex = widget.isMandatory ? 0 : editorNotifier.fontAnimationIndex
+        ..fontAnimationIndex = widget.isMandatory ? 0 : editorNotifier.fontAnimationIndex // Nessuna animazione per testi obbligatori
         ..textAlign = editorNotifier.textAlign
         ..textList = editorNotifier.textList
         ..animationType = widget.isMandatory ? TextAnimationType.none : editorNotifier.animationList[editorNotifier.fontAnimationIndex]);
+      
       editorNotifier.setDefaults();
       controlNotifier.isTextEditing = !controlNotifier.isTextEditing;
     } else {

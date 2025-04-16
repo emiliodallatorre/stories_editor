@@ -319,6 +319,10 @@ class DraggableWidget extends StatelessWidget {
     editorProvider.animationType = item.animationType;
     editorProvider.textList = item.textList;
     editorProvider.fontAnimationIndex = item.fontAnimationIndex;
+    
+    // Imposta isLast in base al flag isMandatory dell'elemento
+    controlNotifier.isLast = item.isMandatory;
+    
     itemProvider.editableItems
         .removeAt(itemProvider.editableItems.indexOf(item));
     editorProvider.fontFamilyController = PageController(

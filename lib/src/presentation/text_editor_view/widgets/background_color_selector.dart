@@ -9,6 +9,9 @@ class BackgroundColorSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<TextEditingNotifier>(
       builder: (context, editorNotifier, child) {
+        // Ottieni la lista di colori per testo obbligatorio
+        final colors = editorNotifier.getMandatoryTextBackgroundColors();
+        
         return Container(
           height: 80,
           decoration: BoxDecoration(
@@ -28,13 +31,13 @@ class BackgroundColorSelector extends StatelessWidget {
                     mainAxisSpacing: 8,
                   ),
                   scrollDirection: Axis.horizontal,
-                  itemCount: _getBackgroundColors().length,
+                  itemCount: colors.length,
                   itemBuilder: (context, index) {
-                    final color = _getBackgroundColors()[index];
+                    final color = colors[index];
                     return GestureDetector(
                       onTap: () {
-                        // Set the background color
-                        editorNotifier.backGroundColor = color;
+                        // Imposta il colore di sfondo usando il metodo specifico per testo obbligatorio
+                        editorNotifier.setMandatoryTextBackgroundColor(color);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -47,9 +50,6 @@ class BackgroundColorSelector extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: color == Colors.transparent
-                            ? const Icon(Icons.block, color: Colors.white54, size: 16)
-                            : null,
                       ),
                     );
                   },
@@ -60,33 +60,5 @@ class BackgroundColorSelector extends StatelessWidget {
         );
       },
     );
-  }
-
-  // Helper method to get the list of background colors
-  List<Color> _getBackgroundColors() {
-    return [
-      Colors.transparent,
-      Colors.black,
-      Colors.white,
-      Colors.red,
-      Colors.pink,
-      Colors.purple,
-      Colors.deepPurple,
-      Colors.indigo,
-      Colors.blue,
-      Colors.lightBlue,
-      Colors.cyan,
-      Colors.teal,
-      Colors.green,
-      Colors.lightGreen,
-      Colors.lime,
-      Colors.yellow,
-      Colors.amber,
-      Colors.orange,
-      Colors.deepOrange,
-      Colors.brown,
-      Colors.grey,
-      Colors.blueGrey,
-    ];
   }
 }
