@@ -27,7 +27,9 @@ dependencies:
   vision_gallery_saver: ^2.0.2
     #own packages
   gallery_media_picker:
-    git: https://github.com/resmedia-projects/gallery_media_picker
+    git:
+      url: https://github.com/resmedia-projects/gallery_media_picker
+      ref: features/media_fixes
     # path: ../gallery_media_picker
 
   modal_gif_picker:
